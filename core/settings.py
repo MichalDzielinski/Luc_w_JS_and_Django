@@ -25,7 +25,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     #custom apps
-    'app',
+    'posts',
+    'profiles',
+    #3rd party apps
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -41,7 +44,7 @@ MIDDLEWARE = [
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR, 'templates'],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -85,5 +88,11 @@ USE_TZ = True
 
 #region STATIC FILES AND MEDIA
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [BASE_DIR / 'static', 
+                    BASE_DIR / 'posts' / 'static',
+                    BASE_DIR / 'profiles' / 'static',]
+
+MEDIA_URL = '/media/'
+MEDIA_ROOM = BASE_DIR/ 'media'
 #endregion
 

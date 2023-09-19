@@ -14,7 +14,16 @@
     <!-- {% for i in qs %}
         {{i.title}} - {{i.body}}<br>
     {% endfor  %} -->
+    
+    <div id="posts-box" ></div>
+    <div id="spinner-box" class="text-center mt-7">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+    <div class="text-center mb-3" id="end-box">
 
-    <div id="posts-box"></div>
-    <div id="hello-world"></div>
+        <button class="btn btn-primary" id="load-btn">Load more</button>
+    </div>
+   
 {% endblock content %}

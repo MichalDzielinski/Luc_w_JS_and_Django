@@ -22,6 +22,29 @@ const csrftoken = getCookie('csrftoken');
 
 const likeUnlikePosts = () => {
     const likeUnlikeForms = [...document.getElementsByClassName('like-unlike-forms')]
+    likeUnlikeForms.forEach(form=>form.addEventListener('submit', e=> {
+        e.preventDefault()
+        const clickedId = e.target.getAttribute('data-form-id')
+        const clickedBtn = document.getElementById(`like-unlike-${clickedId}`)
+
+        $.ajax({
+            type: 'POST',
+            url: 'like-unlike/',
+            data: {
+                'csrfmiddlewaretoken': csrftoken,
+                'pk': clickedId,
+            },
+
+            success: function(response){
+                console.log(response);
+                clickedBtn.textContent =  response.liked ? `Unlike (${response.count})` : `Like (${response.count})`
+            },
+            error: function(error){
+                console.log(error);
+
+        }});
+    
+    }))
 }
 
 let visible = 3
@@ -51,8 +74,7 @@ const getData = () => {
                             </div>
                             <div class='col-2'>
                                 <form class='like-unlike-forms' data-form-id='${el.id}'>
-                                    {% csrf_token %}
-                                    <button href="#" class="btn btn-secondary">${el.liked ? `Unlike (${el.count})` : `Like (${el.count})`}</button>
+                                    <button href="#" class="btn btn-secondary" id="like-unlike-${el.id}">${el.liked ? `Unlike (${el.count})` : `Like (${el.count})`}</button>
                                 </form>
                             </div>
                         </div>
@@ -61,6 +83,7 @@ const getData = () => {
                 </div>
                 `
             });
+                likeUnlikePosts()
     
             }, 1000)
             console.log(response.size)
